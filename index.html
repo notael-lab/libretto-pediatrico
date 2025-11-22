@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>PugliaSalute - Libretto Pediatrico Digitale</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Libretto pediatrico digitale per le famiglie pugliesi. Gestisci i dati sanitari dei tuoi figli in modo semplice e sicuro dal tuo browser.">
+  <meta name="description" content="Libretto pediatrico digitale per le famiglie pugliesi. Gestisci i dati sanitari dei tuoi figli dal browser.">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/components.css">
@@ -205,10 +205,9 @@
           <!-- Grafici di crescita -->
           <div class="growth-charts">
             <div class="section-header">
-              <h3>Grafici di crescita (demo)</h3>
+              <h3>Grafici di crescita (OMS demo)</h3>
               <p class="section-subtitle">
-                Curve percentili e proiezione sono indicative e non sostituiscono i
-                grafici ufficiali OMS/ISTAT né il parere del pediatra.
+                Le curve percentili sono basate sugli standard OMS (maschi 0–5 anni) e hanno solo valore indicativo.
               </p>
             </div>
             <div class="growth-charts-grid">
@@ -285,7 +284,11 @@
           <form id="notesForm">
             <div class="form-field">
               <label for="notesText">Note</label>
-              <textarea id="notesText" name="noteGeneraliEstese" rows="8" placeholder="Scrivi qui le note importanti per questo bambino."></textarea>
+              <textarea
+                id="notesText"
+                name="noteGeneraliEstese"
+                rows="8"
+                placeholder="Scrivi qui le note importanti per questo bambino."></textarea>
             </div>
             <div class="form-actions">
               <button type="submit" class="btn primary small">Salva note</button>
@@ -293,12 +296,13 @@
           </form>
         </section>
 
-        <!-- Export / Import JSON -->
+        <!-- Export / Import JSON e collegamento file -->
         <section class="backup-section">
           <div class="section-header">
             <h3>Esportazione / importazione dati</h3>
             <p class="section-subtitle">
               Le operazioni riguardano tutti i libretti presenti in questa applicazione.
+              Puoi anche collegare un file dati JSON (in una cartella sincronizzata) per usarlo su più dispositivi.
             </p>
           </div>
           <div class="backup-actions">
@@ -309,6 +313,9 @@
               Importa dati (JSON)
               <input id="importJsonInput" type="file" accept="application/json" hidden>
             </label>
+            <button id="linkDataFileBtn" class="btn ghost small" type="button">
+              Collega file dati (JSON)
+            </button>
           </div>
         </section>
       </section>
@@ -317,9 +324,9 @@
       <section id="info-app" class="card info-card">
         <h2>Informazioni sull&apos;applicazione</h2>
         <ul class="info-list">
-          <li>I dati sono salvati solo sul tuo dispositivo (localStorage del browser).</li>
+          <li>I dati sono salvati solo sul tuo dispositivo (localStorage del browser e/o file dati JSON).</li>
           <li>Puoi usare l&apos;app anche offline una volta caricata.</li>
-          <li>Cancellando la cronologia o i dati del browser, potresti perdere le informazioni salvate.</li>
+          <li>Cancellando la cronologia o i dati del browser potresti perdere le informazioni salvate in locale.</li>
           <li>L&apos;app è pensata per uso familiare e non sostituisce in alcun modo il parere medico.</li>
         </ul>
       </section>
@@ -340,6 +347,7 @@
   <!-- Libreria per i grafici -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+  <!-- Moduli JS dell'app -->
   <script src="js/storage.js"></script>
   <script src="js/models.js"></script>
   <script src="js/charts.js"></script>
