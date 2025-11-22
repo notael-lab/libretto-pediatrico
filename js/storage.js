@@ -34,14 +34,14 @@ const Storage = (function () {
   }
 
   // --- File System Access API ---
-function supportsFileBackend() {
-  return (
-    typeof window !== "undefined" &&
-    window.isSecureContext === true &&     // https o localhost
-    "showOpenFilePicker" in window         // basta questo per la nostra logica
-  );
-}
 
+  function supportsFileBackend() {
+    return (
+      typeof window !== "undefined" &&
+      "showOpenFilePicker" in window &&
+      "FileSystemFileHandle" in window
+    );
+  }
 
   async function writeToFile(serialised) {
     if (!fileHandle) return;
@@ -136,4 +136,3 @@ function supportsFileBackend() {
     STORAGE_KEY,
   };
 })();
-
