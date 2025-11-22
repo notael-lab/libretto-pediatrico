@@ -51,8 +51,7 @@
 
   // ---- Inizializzazione ----
 
-  
-    function init() {
+  function init() {
   try {
     if (footerYearEl) {
       footerYearEl.textContent = new Date().getFullYear();
@@ -67,15 +66,14 @@
 
     bindEvents();
 
-    // --- NUOVO: offri modalità "file dati" all'inizio ---
+    // >>> QUESTA RIGA DEVE ESSERCI <<<
     maybeAskForDataFile();
-
   } catch (err) {
     console.error("Errore durante l'inizializzazione dell'app:", err);
   }
 }
 
-  }
+  
 
   // ---- Event listeners ----
 
@@ -458,4 +456,5 @@ async function maybeAskForDataFile() {
   // Avvio al caricamento del DOM
   document.addEventListener("DOMContentLoaded", init);
 })();
+
 
