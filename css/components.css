@@ -1,0 +1,446 @@
+/* css/components.css */
+
+/* Pannelli e card */
+
+.card {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+}
+
+.panel-title {
+  font-size: 1.3rem;
+}
+
+.panel-subtitle {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.card-title {
+  font-size: 1rem;
+  margin-bottom: var(--spacing-md);
+}
+
+/* Bottoni */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: #e5e7eb;
+  color: var(--color-text);
+  transition: background-color var(--transition-fast), box-shadow var(--transition-fast),
+    transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.btn:hover {
+  background-color: #d1d5db;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn.primary {
+  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-dark));
+  color: #ffffff;
+}
+
+.btn.primary:hover {
+  background: linear-gradient(90deg, var(--color-primary-dark), var(--color-primary));
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+}
+
+.btn.ghost {
+  background-color: transparent;
+  border-color: rgba(148, 163, 184, 0.6);
+}
+
+.btn.danger {
+  border-color: rgba(239, 68, 68, 0.6);
+  color: var(--color-accent);
+}
+
+.btn.small {
+  font-size: 0.8rem;
+  padding: 0.3rem 0.65rem;
+}
+
+/* Form */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-md);
+}
+
+.form-grid.compact {
+  gap: var(--spacing-sm);
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.form-field-full {
+  grid-column: 1 / -1;
+}
+
+label {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+input,
+textarea {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  padding: 0.4rem 0.5rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast),
+    background-color var(--transition-fast);
+  background-color: #f9fafb;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+  background-color: #ffffff;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #9ca3af;
+}
+
+.form-actions {
+  margin-top: var(--spacing-md);
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+/* Elenco figli */
+
+.children-list {
+  list-style: none;
+  margin: 0;
+  margin-top: var(--spacing-md);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.child-item {
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast),
+    box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+
+.child-item:hover {
+  background-color: var(--color-primary-light);
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+  transform: translateY(-1px);
+}
+
+.child-item.active {
+  background: linear-gradient(90deg, var(--color-primary-light), #ffffff);
+  border-color: var(--color-primary);
+}
+
+.child-item-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.child-item-name {
+  font-weight: 600;
+}
+
+.child-item-meta {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.child-badge {
+  font-size: 0.75rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background-color: #e0f2fe;
+  color: #0369a1;
+}
+
+/* Dettaglio figlio */
+
+.child-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+  gap: var(--spacing-md);
+}
+
+.child-detail-meta {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+/* Tabs */
+
+.tabs {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.tab {
+  border: none;
+  background: transparent;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+  border-radius: 999px 999px 0 0;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  position: relative;
+  transition: background-color var(--transition-fast), color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.tab.active {
+  color: var(--color-primary-dark);
+  background-color: #ffffff;
+  box-shadow: 0 -1px 0 #ffffff, 0 3px 8px rgba(15, 23, 42, 0.12);
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Tabelle */
+
+.table-wrapper {
+  margin-top: var(--spacing-md);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.data-table thead {
+  background-color: var(--color-primary-light);
+}
+
+.data-table th,
+.data-table td {
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.data-table th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table tbody tr:nth-child(even) {
+  background-color: #f9fafb;
+}
+
+.data-table .row-actions {
+  text-align: right;
+}
+
+.data-table button.btn.small {
+  font-size: 0.7rem;
+}
+
+/* Empty state */
+
+.empty-state {
+  text-align: center;
+  background: radial-gradient(circle at top left, var(--color-primary-light), #ffffff);
+}
+
+.empty-state h2 {
+  margin-bottom: var(--spacing-xs);
+}
+
+.empty-state p {
+  color: var(--color-text-muted);
+}
+
+/* Info card */
+
+.info-card {
+  margin-top: var(--spacing-md);
+  background-color: #f9fafb;
+}
+
+.info-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+/* Sezioni */
+
+.section-header {
+  margin-bottom: var(--spacing-sm);
+}
+
+.section-subtitle {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+/* Form specifici */
+
+.child-form {
+  margin-top: var(--spacing-md);
+}
+
+/* Responsivo componenti */
+
+@media (max-width: 700px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .child-detail-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .card {
+    padding: var(--spacing-md);
+  }
+}
+
+/* Azioni nel dettaglio figlio */
+.child-detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+/* Grafici di crescita */
+.growth-charts {
+  margin-top: var(--spacing-lg);
+}
+
+.growth-charts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-md);
+}
+
+/* Card del grafico */
+.chart-card {
+  background-color: #f9fafb;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  border: 1px solid var(--color-border);
+
+  /* altezza FISSA della card, così il grafico non “scappa” */
+  height: 360px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Titolo del grafico */
+.chart-card h4 {
+  font-size: 0.95rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Canvas del grafico: riempie lo spazio disponibile nella card */
+.chart-card canvas {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+
+/* Sezione backup */
+.backup-section {
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+  border-top: 1px dashed var(--color-border);
+}
+
+.backup-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-sm);
+}
+
+/* Label stile bottone per file input */
+.file-btn {
+  position: relative;
+  overflow: hidden;
+}
+.file-btn input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Responsivo grafici */
+@media (max-width: 900px) {
+  .growth-charts-grid {
+    grid-template-columns: 1fr;
+  }
+}

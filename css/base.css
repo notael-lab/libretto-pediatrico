@@ -1,0 +1,140 @@
+/* css/base.css */
+/* Reset leggero e variabili di tema */
+
+:root {
+  --color-primary: #0056a3; /* blu istituzionale */
+  --color-primary-light: #e5f0fb;
+  --color-primary-dark: #003f79;
+  --color-accent: #c0392b; /* rosso di evidenza */
+  --color-bg: #f5f7fb;
+  --color-surface: #ffffff;
+  --color-border: #dde3f0;
+  --color-text: #1f2933;
+  --color-text-muted: #6b7280;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  --shadow-soft: 0 6px 18px rgba(15, 23, 42, 0.12);
+
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+
+  --transition-fast: 150ms ease-out;
+}
+
+/* Reset di base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4 {
+  margin: 0 0 var(--spacing-sm);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+p {
+  margin: 0 0 var(--spacing-sm);
+}
+
+/* Link */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+/* Utility */
+.hidden {
+  display: none !important;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+@media print {
+  body {
+    background: #ffffff;
+  }
+
+  .site-header,
+  .site-footer,
+  #children-panel,
+  #info-app,
+  .backup-section {
+    display: none !important;
+  }
+
+  .main {
+    display: block;
+    padding: 0;
+  }
+
+  .detail-panel {
+    grid-column: 1 / -1;
+  }
+
+  .card {
+    box-shadow: none;
+    border-radius: 0;
+    border: none;
+    padding: 0;
+  }
+
+  .tabs {
+    display: none;
+  }
+
+  /* Mostra tutte le sezioni del libretto in stampa */
+  .tab-content {
+    display: block !important;
+    margin-bottom: 1rem;
+  }
+}
+

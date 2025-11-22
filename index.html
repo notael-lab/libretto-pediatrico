@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>PugliaSalute - Libretto Pediatrico Digitale</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Libretto pediatrico digitale per le famiglie pugliesi. Gestisci i dati sanitari dei tuoi figli in modo semplice e sicuro dal tuo browser.">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner container">
+      <div class="brand">
+        <span class="brand-logo" aria-hidden="true">❤</span>
+        <div class="brand-text">
+          <span class="brand-title">PugliaSalute</span>
+          <span class="brand-subtitle">Libretto pediatrico digitale</span>
+        </div>
+      </div>
+      <nav class="header-nav" aria-label="Collegamenti principali">
+        <a href="#children-panel" class="nav-link">I tuoi figli</a>
+        <a href="#info-app" class="nav-link">Informazioni</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main container">
+    <!-- Pannello elenco figli -->
+    <section id="children-panel" class="panel children-panel">
+      <header class="panel-header">
+        <div>
+          <h1 class="panel-title">I tuoi figli</h1>
+          <p class="panel-subtitle">Gestisci i libretti pediatrici in un unico posto.</p>
+        </div>
+        <button id="toggleChildFormBtn" class="btn primary">
+          + Aggiungi figlio
+        </button>
+      </header>
+
+      <!-- Form nuovo figlio -->
+      <form id="childForm" class="card child-form hidden" autocomplete="off">
+        <h2 class="card-title">Nuovo figlio</h2>
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="childName">Nome *</label>
+            <input id="childName" name="nome" required />
+          </div>
+          <div class="form-field">
+            <label for="childSurname">Cognome *</label>
+            <input id="childSurname" name="cognome" required />
+          </div>
+          <div class="form-field">
+            <label for="childBirthDate">Data di nascita *</label>
+            <input id="childBirthDate" name="dataNascita" type="date" required />
+          </div>
+          <div class="form-field">
+            <label for="childFiscalCode">Codice fiscale</label>
+            <input id="childFiscalCode" name="codiceFiscale" maxlength="16" />
+          </div>
+          <div class="form-field">
+            <label for="childDoctor">Pediatra</label>
+            <input id="childDoctor" name="pediatra" />
+          </div>
+          <div class="form-field form-field-full">
+            <label for="childNotes">Note generali</label>
+            <textarea id="childNotes" name="noteGenerali" rows="2"></textarea>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn primary">Salva figlio</button>
+          <button type="button" id="cancelChildFormBtn" class="btn ghost">Annulla</button>
+        </div>
+      </form>
+
+      <!-- Elenco figli -->
+      <ul id="childrenList" class="children-list" aria-label="Elenco figli">
+        <!-- generato da JavaScript -->
+      </ul>
+    </section>
+
+    <!-- Pannello dettaglio + info -->
+    <section class="panel detail-panel">
+      <!-- Stato iniziale vuoto -->
+      <div id="emptyState" class="card empty-state">
+        <h2>Seleziona un figlio</h2>
+        <p>Per iniziare, seleziona un figlio dall&apos;elenco oppure aggiungine uno nuovo.</p>
+      </div>
+
+      <!-- Dettaglio libretto figlio -->
+      <section id="childDetail" class="card child-detail hidden" aria-live="polite">
+        <header class="child-detail-header">
+          <div>
+            <h2 id="childDetailName"></h2>
+            <p id="childDetailMeta" class="child-detail-meta"></p>
+          </div>
+          <div class="child-detail-actions">
+            <button id="printChildBtn" class="btn ghost small" type="button">
+              Stampa libretto
+            </button>
+            <button id="deleteChildBtn" class="btn danger ghost small" type="button">
+              Elimina libretto
+            </button>
+          </div>
+        </header>
+
+        <!-- Tabs -->
+        <nav class="tabs" aria-label="Sezioni del libretto pediatrico">
+          <button type="button" class="tab active" data-tab="anagrafica">Anagrafica</button>
+          <button type="button" class="tab" data-tab="visite">Visite pediatriche</button>
+          <button type="button" class="tab" data-tab="vaccinazioni">Vaccinazioni</button>
+          <button type="button" class="tab" data-tab="note">Note</button>
+        </nav>
+
+        <!-- TAB ANAGRAFICA -->
+        <section class="tab-content active" data-tab-content="anagrafica">
+          <form id="anagraficaForm" class="form-grid compact">
+            <div class="form-field">
+              <label for="anagNome">Nome</label>
+              <input id="anagNome" name="nome" />
+            </div>
+            <div class="form-field">
+              <label for="anagCognome">Cognome</label>
+              <input id="anagCognome" name="cognome" />
+            </div>
+            <div class="form-field">
+              <label for="anagDataNascita">Data di nascita</label>
+              <input id="anagDataNascita" name="dataNascita" type="date" />
+            </div>
+            <div class="form-field">
+              <label for="anagCodiceFiscale">Codice fiscale</label>
+              <input id="anagCodiceFiscale" name="codiceFiscale" maxlength="16" />
+            </div>
+            <div class="form-field">
+              <label for="anagPediatra">Pediatra</label>
+              <input id="anagPediatra" name="pediatra" />
+            </div>
+            <div class="form-field form-field-full">
+              <label for="anagNoteGenerali">Note generali</label>
+              <textarea id="anagNoteGenerali" name="noteGenerali" rows="3"></textarea>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn primary small">Salva anagrafica</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- TAB VISITE -->
+        <section class="tab-content" data-tab-content="visite">
+          <div class="section-header">
+            <h3>Visite pediatriche</h3>
+            <p class="section-subtitle">Registrazione dei controlli periodici.</p>
+          </div>
+
+          <form id="visitForm" class="form-grid compact">
+            <div class="form-field">
+              <label for="visitDate">Data *</label>
+              <input id="visitDate" name="data" type="date" required />
+            </div>
+            <div class="form-field">
+              <label for="visitType">Tipo visita *</label>
+              <input id="visitType" name="tipo" placeholder="Controllo, bilancio di salute..." required />
+            </div>
+            <div class="form-field">
+              <label for="visitWeight">Peso (kg)</label>
+              <input id="visitWeight" name="peso" type="number" step="0.01" min="0" />
+            </div>
+            <div class="form-field">
+              <label for="visitHeight">Altezza (cm)</label>
+              <input id="visitHeight" name="altezza" type="number" step="0.1" min="0" />
+            </div>
+            <div class="form-field">
+              <label for="visitHeadCirc">Circonferenza cranica (cm)</label>
+              <input id="visitHeadCirc" name="circonferenzaCranica" type="number" step="0.1" min="0" />
+            </div>
+            <div class="form-field form-field-full">
+              <label for="visitNotes">Note</label>
+              <textarea id="visitNotes" name="note" rows="2"></textarea>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn primary small">Aggiungi visita</button>
+            </div>
+          </form>
+
+          <div class="table-wrapper">
+            <table class="data-table" aria-label="Elenco visite pediatriche">
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Tipo</th>
+                  <th>Peso</th>
+                  <th>Altezza</th>
+                  <th>Circ. cranica</th>
+                  <th>Note</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="visitsTableBody">
+                <!-- righe generate da JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Grafici di crescita -->
+          <div class="growth-charts">
+            <div class="section-header">
+              <h3>Grafici di crescita (demo)</h3>
+              <p class="section-subtitle">
+                Curve percentili e proiezione sono indicative e non sostituiscono i
+                grafici ufficiali OMS/ISTAT né il parere del pediatra.
+              </p>
+            </div>
+            <div class="growth-charts-grid">
+              <div class="chart-card">
+                <h4>Peso per età</h4>
+                <canvas id="weightChart" aria-label="Grafico peso per età" role="img"></canvas>
+              </div>
+              <div class="chart-card">
+                <h4>Altezza per età</h4>
+                <canvas id="heightChart" aria-label="Grafico altezza per età" role="img"></canvas>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB VACCINAZIONI -->
+        <section class="tab-content" data-tab-content="vaccinazioni">
+          <div class="section-header">
+            <h3>Vaccinazioni</h3>
+            <p class="section-subtitle">Diario vaccinazioni effettuate e richiami.</p>
+          </div>
+
+          <form id="vaccineForm" class="form-grid compact">
+            <div class="form-field">
+              <label for="vaccineDate">Data *</label>
+              <input id="vaccineDate" name="data" type="date" required />
+            </div>
+            <div class="form-field">
+              <label for="vaccineName">Vaccino *</label>
+              <input id="vaccineName" name="nome" placeholder="Es. Esavalente, MPR..." required />
+            </div>
+            <div class="form-field">
+              <label for="vaccineDose">Dose/richiamo</label>
+              <input id="vaccineDose" name="dose" placeholder="1ª dose, richiamo..." />
+            </div>
+            <div class="form-field">
+              <label for="vaccineLot">Lotto</label>
+              <input id="vaccineLot" name="lotto" />
+            </div>
+            <div class="form-field form-field-full">
+              <label for="vaccineNotes">Note</label>
+              <textarea id="vaccineNotes" name="note" rows="2"></textarea>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn primary small">Aggiungi vaccinazione</button>
+            </div>
+          </form>
+
+          <div class="table-wrapper">
+            <table class="data-table" aria-label="Elenco vaccinazioni">
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Vaccino</th>
+                  <th>Dose</th>
+                  <th>Lotto</th>
+                  <th>Note</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="vaccinesTableBody">
+                <!-- righe generate da JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- TAB NOTE -->
+        <section class="tab-content" data-tab-content="note">
+          <div class="section-header">
+            <h3>Note libere</h3>
+            <p class="section-subtitle">Annotazioni su crescita, alimentazione, allergie, ecc.</p>
+          </div>
+          <form id="notesForm">
+            <div class="form-field">
+              <label for="notesText">Note</label>
+              <textarea id="notesText" name="noteGeneraliEstese" rows="8" placeholder="Scrivi qui le note importanti per questo bambino."></textarea>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn primary small">Salva note</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- Export / Import JSON -->
+        <section class="backup-section">
+          <div class="section-header">
+            <h3>Esportazione / importazione dati</h3>
+            <p class="section-subtitle">
+              Le operazioni riguardano tutti i libretti presenti in questa applicazione.
+            </p>
+          </div>
+          <div class="backup-actions">
+            <button id="exportJsonBtn" class="btn ghost small" type="button">
+              Esporta dati (JSON)
+            </button>
+            <label class="btn ghost small file-btn">
+              Importa dati (JSON)
+              <input id="importJsonInput" type="file" accept="application/json" hidden>
+            </label>
+          </div>
+        </section>
+      </section>
+
+      <!-- Informazioni app -->
+      <section id="info-app" class="card info-card">
+        <h2>Informazioni sull&apos;applicazione</h2>
+        <ul class="info-list">
+          <li>I dati sono salvati solo sul tuo dispositivo (localStorage del browser).</li>
+          <li>Puoi usare l&apos;app anche offline una volta caricata.</li>
+          <li>Cancellando la cronologia o i dati del browser, potresti perdere le informazioni salvate.</li>
+          <li>L&apos;app è pensata per uso familiare e non sostituisce in alcun modo il parere medico.</li>
+        </ul>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="footer-text">
+        Libretto pediatrico digitale ispirato alla grafica di PugliaSalute. Prototipo dimostrativo senza valore legale.
+      </p>
+      <p class="footer-text">
+        &copy; <span id="footerYear"></span> Regione Puglia &ndash; Esempio non ufficiale.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Libreria per i grafici -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script src="js/storage.js"></script>
+  <script src="js/models.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
