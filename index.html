@@ -27,7 +27,7 @@
   </header>
 
   <main class="main container">
-    <!-- Pannello elenco figli -->
+    <!-- COLONNA SINISTRA: figli + backup -->
     <section id="children-panel" class="panel children-panel">
       <header class="panel-header">
         <div>
@@ -78,9 +78,32 @@
       <ul id="childrenList" class="children-list" aria-label="Elenco figli">
         <!-- generato da JavaScript -->
       </ul>
+
+      <!-- Backup / import / file dati - SEMPRE visibile -->
+      <section class="card backup-section">
+        <div class="section-header">
+          <h3>Esportazione / importazione dati</h3>
+          <p class="section-subtitle">
+            Le operazioni riguardano tutti i libretti presenti in questa applicazione.
+            Puoi anche collegare un file dati JSON (in una cartella sincronizzata) per usarlo su più dispositivi.
+          </p>
+        </div>
+        <div class="backup-actions">
+          <button id="exportJsonBtn" class="btn ghost small" type="button">
+            Esporta dati (JSON)
+          </button>
+          <label class="btn ghost small file-btn">
+            Importa dati (JSON)
+            <input id="importJsonInput" type="file" accept="application/json" hidden>
+          </label>
+          <button id="linkDataFileBtn" class="btn ghost small" type="button">
+            Collega file dati (JSON)
+          </button>
+        </div>
+      </section>
     </section>
 
-    <!-- Pannello dettaglio + info -->
+    <!-- COLONNA DESTRA: dettaglio + info -->
     <section class="panel detail-panel">
       <!-- Stato iniziale vuoto -->
       <div id="emptyState" class="card empty-state">
@@ -295,31 +318,7 @@
             </div>
           </form>
         </section>
-
-              </section>
-
-      <!-- Export / Import JSON e collegamento file -->
-        <section class="backup-section">
-          <div class="section-header">
-            <h3>Esportazione / importazione dati</h3>
-            <p class="section-subtitle">
-              Le operazioni riguardano tutti i libretti presenti in questa applicazione.
-              Puoi anche collegare un file dati JSON (in una cartella sincronizzata) per usarlo su più dispositivi.
-            </p>
-          </div>
-          <div class="backup-actions">
-            <button id="exportJsonBtn" class="btn ghost small" type="button">
-              Esporta dati (JSON)
-            </button>
-            <label class="btn ghost small file-btn">
-              Importa dati (JSON)
-              <input id="importJsonInput" type="file" accept="application/json" hidden>
-            </label>
-            <button id="linkDataFileBtn" class="btn ghost small" type="button">
-              Collega file dati (JSON)
-            </button>
-          </div>
-        </section>
+      </section>
 
       <!-- Informazioni app -->
       <section id="info-app" class="card info-card">
@@ -356,4 +355,3 @@
   <script src="js/app.js"></script>
 </body>
 </html>
-
