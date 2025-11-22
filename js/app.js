@@ -86,6 +86,7 @@
 
     // --- NUOVO: offri modalità "file dati" all'inizio ---
     maybeAskForDataFile();
+
   } catch (err) {
     console.error("Errore durante l'inizializzazione dell'app:", err);
   }
@@ -459,6 +460,9 @@
   UI.showChildDetail(child);
   safeChartsUpdate(child);
 }
+
+
+
 
   // Avvio al caricamento del DOM
   document.addEventListener("DOMContentLoaded", init);
