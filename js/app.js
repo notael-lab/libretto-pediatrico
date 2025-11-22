@@ -29,9 +29,10 @@
   // Footer
   const footerYearEl = document.getElementById("footerYear");
 
-  // Export / Import JSON
+  // Export / Import / File dati JSON
   const exportJsonBtn = document.getElementById("exportJsonBtn");
   const importJsonInput = document.getElementById("importJsonInput");
+  const linkDataFileBtn = document.getElementById("linkDataFileBtn");
 
   // Stato applicazione
   let state = Storage.load();
@@ -40,7 +41,6 @@
   // ---- Helper: aggiorna grafici in modo sicuro ----
   function safeChartsUpdate(child) {
     try {
-      // QUI il fix: niente window.Charts, uso typeof che è sicuro anche se Charts non esiste
       if (typeof Charts !== "undefined" && typeof Charts.update === "function") {
         Charts.update(child);
       }
@@ -68,43 +68,16 @@
     } catch (err) {
       console.error("Errore durante l'inizializzazione dell'app:", err);
     }
-
-    function init() {
-  try {
-    if (footerYearEl) {
-      footerYearEl.textContent = new Date().getFullYear();
-    }
-
-    UI.renderChildrenList(state.children, selectedChildId);
-    const initialChild = selectedChildId
-      ? Models.findChild(state, selectedChildId)
-      : null;
-    UI.showChildDetail(initialChild);
-    safeChartsUpdate(initialChild);
-
-    bindEvents();
-
-    // --- NUOVO: offri modalità "file dati" all'inizio ---
-    maybeAskForDataFile();
-
-  } catch (err) {
-    console.error("Errore durante l'inizializzazione dell'app:", err);
-  }
-}
-
   }
 
   // ---- Event listeners ----
 
   function bindEvents() {
-    // Se qualche elemento non esiste per errore di markup, evitiamo crash
+    // Se elementi critici mancano, esci
     if (!childForm || !toggleChildFormBtn || !cancelChildFormBtn || !childrenListEl) {
       console.error("Elementi principali mancanti: controlla gli ID in index.html");
       return;
     }
-
-
-    
 
     // Form nuovo figlio - mostra/nasconde
     toggleChildFormBtn.addEventListener("click", () => {
@@ -131,13 +104,9 @@
         nome: (formData.get("nome") || "").toString().trim(),
         cognome: (formData.get("cognome") || "").toString().trim(),
         dataNascita: formData.get("dataNascita") || "",
-        codiceFiscale: (formData.get("codiceFiscale") || "")
-          .toString()
-          .trim(),
+        codiceFiscale: (formData.get("codiceFiscale") || "").toString().trim(),
         pediatra: (formData.get("pediatra") || "").toString().trim(),
-        noteGenerali: (formData.get("noteGenerali") || "")
-          .toString()
-          .trim(),
+        noteGenerali: (formData.get("noteGenerali") || "").toString().trim(),
       });
 
       state.children.push(child);
@@ -218,13 +187,9 @@
         child.nome = (formData.get("nome") || "").toString().trim();
         child.cognome = (formData.get("cognome") || "").toString().trim();
         child.dataNascita = formData.get("dataNascita") || "";
-        child.codiceFiscale = (formData.get("codiceFiscale") || "")
-          .toString()
-          .trim();
+        child.codiceFiscale = (formData.get("codiceFiscale") || "").toString().trim();
         child.pediatra = (formData.get("pediatra") || "").toString().trim();
-        child.noteGenerali = (formData.get("noteGenerali") || "")
-          .toString()
-          .trim();
+        child.noteGenerali = (formData.get("noteGenerali") || "").toString().trim();
 
         Storage.save(state);
         UI.renderChildrenList(state.children, selectedChildId);
@@ -247,9 +212,7 @@
           tipo: (formData.get("tipo") || "").toString().trim(),
           peso: (formData.get("peso") || "").toString().trim(),
           altezza: (formData.get("altezza") || "").toString().trim(),
-          circonferenzaCranica: (formData.get("circonferenzaCranica") || "")
-            .toString()
-            .trim(),
+          circonferenzaCranica: (formData.get("circonferenzaCranica") || "").toString().trim(),
           note: (formData.get("note") || "").toString().trim(),
         };
 
@@ -428,41 +391,39 @@
         reader.readAsText(file, "utf-8");
       });
     }
+
+    // Collega file dati (File System Access API)
+    if (linkDataFileBtn) {
+      linkDataFileBtn.addEventListener("click", async () => {
+        if (!Storage.supportsFileBackend()) {
+          alert(
+            "Il tuo browser non supporta la modalità file dati.\n" +
+              "Funziona solo su Chrome/Edge desktop in HTTPS o localhost."
+          );
+          return;
+        }
+
+        const imported = await Storage.connectFileAndLoad();
+        if (!imported) {
+          return;
+        }
+
+        state = imported;
+        selectedChildId = state.children.length ? state.children[0].id : null;
+
+        UI.renderChildrenList(state.children, selectedChildId);
+        const child = selectedChildId
+          ? Models.findChild(state, selectedChildId)
+          : null;
+        UI.showChildDetail(child);
+        safeChartsUpdate(child);
+
+        alert(
+          "File dati collegato correttamente.\nLe modifiche verranno salvate anche in quel file."
+        );
+      });
+    }
   }
-
-  async function maybeAskForDataFile() {
-  // Se non supportato, non chiedere nulla
-  if (!Storage.supportsFileBackend()) return;
-
-  // Se abbiamo già collegato un file in questa sessione, basta così
-  if (Storage.hasFileBackend()) return;
-
-  const useFile = window.confirm(
-    "Vuoi usare un file dati JSON (in una cartella sincronizzata) per poter " +
-      "aprire il libretto da più dispositivi?\n\n" +
-      "OK = scegli file dati JSON\n" +
-      "Annulla = usa la memoria del browser"
-  );
-
-  if (!useFile) return;
-
-  const imported = await Storage.connectFileAndLoad();
-  if (!imported) return;
-
-  // Abbiamo nuovi dati dal file: aggiornare stato e interfaccia
-  state = imported;
-  selectedChildId = state.children.length ? state.children[0].id : null;
-
-  UI.renderChildrenList(state.children, selectedChildId);
-  const child = selectedChildId
-    ? Models.findChild(state, selectedChildId)
-    : null;
-  UI.showChildDetail(child);
-  safeChartsUpdate(child);
-}
-
-
-
 
   // Avvio al caricamento del DOM
   document.addEventListener("DOMContentLoaded", init);
