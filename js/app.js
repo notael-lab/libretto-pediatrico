@@ -52,6 +52,24 @@
   // ---- Inizializzazione ----
 
   function init() {
+    try {
+      if (footerYearEl) {
+        footerYearEl.textContent = new Date().getFullYear();
+      }
+
+      UI.renderChildrenList(state.children, selectedChildId);
+      const initialChild = selectedChildId
+        ? Models.findChild(state, selectedChildId)
+        : null;
+      UI.showChildDetail(initialChild);
+      safeChartsUpdate(initialChild);
+
+      bindEvents();
+    } catch (err) {
+      console.error("Errore durante l'inizializzazione dell'app:", err);
+    }
+
+    function init() {
   try {
     if (footerYearEl) {
       footerYearEl.textContent = new Date().getFullYear();
@@ -66,14 +84,15 @@
 
     bindEvents();
 
-    // >>> QUESTA RIGA DEVE ESSERCI <<<
+    // --- NUOVO: offri modalità "file dati" all'inizio ---
     maybeAskForDataFile();
+
   } catch (err) {
     console.error("Errore durante l'inizializzazione dell'app:", err);
   }
 }
 
-  
+  }
 
   // ---- Event listeners ----
 
@@ -411,19 +430,12 @@
     }
   }
 
-async function maybeAskForDataFile() {
-  // 1. il browser non supporta il file backend → esci in silenzio
-  if (!Storage.supportsFileBackend()) {
-    console.warn(
-      "Modalità file dati non disponibile: niente showOpenFilePicker o contesto non sicuro."
-    );
-    return;
-  }
+  async function maybeAskForDataFile() {
+  // Se non supportato, non chiedere nulla
+  if (!Storage.supportsFileBackend()) return;
 
-  // 2. se c'è già un file collegato in questa sessione, non chiedere di nuovo
-  if (Storage.hasFileBackend()) {
-    return;
-  }
+  // Se abbiamo già collegato un file in questa sessione, basta così
+  if (Storage.hasFileBackend()) return;
 
   const useFile = window.confirm(
     "Vuoi usare un file dati JSON (in una cartella sincronizzata) per poter " +
@@ -437,7 +449,7 @@ async function maybeAskForDataFile() {
   const imported = await Storage.connectFileAndLoad();
   if (!imported) return;
 
-  // Abbiamo caricato nuovi dati dal file: aggiornare stato e UI
+  // Abbiamo nuovi dati dal file: aggiornare stato e interfaccia
   state = imported;
   selectedChildId = state.children.length ? state.children[0].id : null;
 
@@ -452,9 +464,6 @@ async function maybeAskForDataFile() {
 
 
 
-
   // Avvio al caricamento del DOM
   document.addEventListener("DOMContentLoaded", init);
 })();
-
-
